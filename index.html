@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Briefing para Projeto Web</title>
+    <style>
+        :root {
+            --primary: #0000ad;
+            --primary-dark: #3a56d4;
+            --secondary: #9042fd;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4bb543;
+            --danger: #dc3545;
+            --border: #dee2e6;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fb;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .form-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+        
+        .form-section {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .form-section:last-child {
+            border-bottom: none;
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .checkbox-item input {
+            width: auto;
+        }
+        
+        .required::after {
+            content: " *";
+            color: var(--danger);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .btn-reset {
+            background-color: #6c757d;
+            margin-left: 10px;
+        }
+        
+        .btn-reset:hover {
+            background-color: #5a6268;
+        }
+        
+        .form-actions {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .progress-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .progress-bar::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background-color: var(--border);
+            z-index: 1;
+        }
+        
+        .progress-step {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            flex: 1;
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background-color: var(--border);
+            color: var(--dark);
+            border-radius: 50%;
+            line-height: 30px;
+            margin-bottom: 5px;
+        }
+        
+        .step-active .step-number {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .step-completed .step-number {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .step-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        
+        .step-active .step-label {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .form-step {
+            display: none;
+        }
+        
+        .form-step.active {
+            display: block;
+        }
+        
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        /* Novos estilos para a analogia */
+        .analogy-box {
+            background: linear-gradient(135deg, #e3f2fd, #f3e5f5);
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .analogy-title {
+            color: var(--primary);
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .analogy-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        .analogy-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .analogy-item h4 {
+            color: var(--secondary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .cost-badge {
+            display: inline-block;
+            background: var(--success);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+            
+            .checkbox-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .navigation-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .btn-reset {
+                margin-left: 0;
+            }
+            
+            .analogy-comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Christian Dev - Briefing para Projeto Web</h1>
+            <p class="subtitle">Preencha este formulário para fornecer todas as informações necessárias para o desenvolvimento do seu site.</p>
+        </header>
+        
+        <div class="progress-bar">
+            <div class="progress-step step-active">
+                <div class="step-number">1</div>
+                <div class="step-label">Informações Básicas</div>
+            </div>
+            <div class="progress-step">
+                <div class="step-number">2</div>
+                <div class="step-label">Design & Conteúdo</div>
+            </div>
+            <div class="progress-step">
+                <div class="step-number">3</div>
+                <div class="step-label">Domínio & Hospedagem</div>
+            </div>
+            <div class="progress-step">
+                <div class="step-number">4</div>
+                <div class="step-label">Finalização</div>
+            </div>
+        </div>
+        
+        <!-- FORM PRINCIPAL CORRETAMENTE CONFIGURADO -->
+        <form id="project-briefing-form" action="https://formspree.io/f/xqayzwqy" method="POST">
+            <!-- Passo 1: Informações Básicas -->
+            <div class="form-step active" id="step1">
+                <div class="form-container">
+                    <div class="form-section">
+                        <h2>Informações do Cliente</h2>
+                        <div class="form-group">
+                            <label for="client-name" class="required">Nome Completo / Empresa</label>
+                            <input type="text" id="client-name" name="client-name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="client-email" class="required">E-mail</label>
+                            <input type="email" id="client-email" name="client-email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="client-phone" class="required">Telefone</label>
+                            <input type="tel" id="client-phone" name="client-phone" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="client-business">Área de Atuação / Segmento</label>
+                            <input type="text" id="client-business" name="client-business">
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h2>Objetivos do Site</h2>
+                        <div class="form-group">
+                            <label for="site-purpose" class="required">Qual é o principal objetivo do site?</label>
+                            <select id="site-purpose" name="site-purpose" required>
+                                <option value="">Selecione uma opção</option>
+                                <option value="venda-produtos">Vender produtos online</option>
+                                <option value="captura-leads">Capturar leads/contatos</option>
+                                <option value="apresentacao-empresa">Apresentar a empresa/serviços</option>
+                                <option value="portfolio">Mostrar portfólio de trabalhos</option>
+                                <option value="blog-conteudo">Publicar conteúdo/blog</option>
+                                <option value="comunidade">Criar uma comunidade</option>
+                                <option value="outro">Outro</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="target-audience">Público-Alvo</label>
+                            <textarea id="target-audience" name="target-audience" placeholder="Descreva o perfil do seu público-alvo (idade, interesses, etc.)"></textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="navigation-buttons">
+                    <div></div>
+                    <button type="button" class="btn next-step" data-next="step2">Próximo</button>
+                </div>
+            </div>
+            
+            <!-- Passo 2: Design & Conteúdo -->
+            <div class="form-step" id="step2">
+                <div class="form-container">
+                    <div class="form-section">
+                        <h2>Preferências de Design</h2>
+                        <div class="form-group">
+                            <label for="design-style">Estilo de Design Preferido</label>
+                            <select id="design-style" name="design-style">
+                                <option value="">Selecione uma opção</option>
+                                <option value="moderno">Moderno e minimalista</option>
+                                <option value="corporate">Corporativo/profissional</option>
+                                <option value="criativo">Criativo e inovador</option>
+                                <option value="elegante">Elegante e sofisticado</option>
+                                <option value="descontraido">Descontraído e divertido</option>
+                                <option value="outro">Outro</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="color-preferences">Preferências de Cores</label>
+                            <input type="text" id="color-preferences" name="color-preferences" placeholder="Ex: Azul e branco, cores vibrantes, etc.">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="reference-sites">Sites de Referência (opcional)</label>
+                            <textarea id="reference-sites" name="reference-sites" placeholder="Liste URLs de sites que você gosta e explique o que gosta neles"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h2>Conteúdo do Site</h2>
+                        <div class="form-group">
+                            <label for="site-pages" class="required">Quais páginas o site deve ter?</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="page-home" name="site-pages" value="home" checked>
+                                    <label for="page-home">Home/Página Inicial</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="page-about" name="site-pages" value="about">
+                                    <label for="page-about">Sobre Nós/Empresa</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="page-services" name="site-pages" value="services">
+                                    <label for="page-services">Serviços/Produtos</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="page-portfolio" name="site-pages" value="portfolio">
+                                    <label for="page-portfolio">Portfólio/Galeria</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="page-blog" name="site-pages" value="blog">
+                                    <label for="page-blog">Blog/Notícias</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="page-contact" name="site-pages" value="contact" checked>
+                                    <label for="page-contact">Contato</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="page-other" name="site-pages" value="other">
+                                    <label for="page-other">Outras:</label>
+                                    <input type="text" id="other-pages" name="other-pages" placeholder="Especifique" class="hidden">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="content-provided">Quem fornecerá o conteúdo?</label>
+                            <select id="content-provided" name="content-provided">
+                                <option value="">Selecione uma opção</option>
+                                <option value="cliente">O cliente fornecerá todo o conteúdo</option>
+                                <option value="parcial">O cliente fornecerá parcialmente</option>
+                                <option value="desenvolvedor">Precisa de criação de conteúdo</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="navigation-buttons">
+                    <button type="button" class="btn prev-step" data-prev="step1">Anterior</button>
+                    <button type="button" class="btn next-step" data-next="step3">Próximo</button>
+                </div>
+            </div>
+            
+            <!-- Passo 3: Domínio & Hospedagem -->
+            <div class="form-step" id="step3">
+                <div class="form-container">
+                    <!-- Analogia Domínio vs Hospedagem -->
+                    <div class="analogy-box">
+                        <div class="analogy-title">
+                            <span>🏠</span>
+                            <h3>Entenda a Diferença: Domínio vs Hospedagem</h3>
+                        </div>
+                        
+                        <p><strong>Imagine que seu site é uma loja física:</strong></p>
+                        
+                        <div class="analogy-comparison">
+                            <div class="analogy-item">
+                                <h4>🌐 DOMÍNIO <span class="cost-badge">R$ 40-60/ano</span></h4>
+                                <p><strong>É o ENDEREÇO da sua loja</strong></p>
+                                <p>Exemplo: "Av. Paulista, 1000"</p>
+                                <p><strong>No digital:</strong> www.suaempresa.com.br</p>
+                                <ul>
+                                    <li>✅ O que as pessoas digitam</li>
+                                    <li>✅ Propriedade intelectual</li>
+                                    <li>✅ Renovação anual</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="analogy-item">
+                                <h4>🖥️ HOSPEDAGEM <span class="cost-badge">R$ 15-50/mês</span></h4>
+                                <p><strong>É o TERRENO e o PRÉDIO</strong></p>
+                                <p>Onde sua loja funciona</p>
+                                <p><strong>No digital:</strong> Servidor com seus arquivos</p>
+                                <ul>
+                                    <li>✅ Onde seu site fica armazenado</li>
+                                    <li>✅ Computador 24h/dia ligado</li>
+                                    <li>✅ Pagamento mensal</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="warning-box">
+                            <p><strong>💡 Você precisa dos DOIS para ter um site profissional!</strong></p>
+                            <p>Domínio (endereço) + Hospedagem (espaço) = Site no ar! 🎉</p>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h2>🌐 Domínio do Site</h2>
+                        
+                        <div class="form-group">
+                            <label for="domain-option" class="required">Opção de Domínio</label>
+                            <select id="domain-option" name="domain-option" required>
+                                <option value="">Selecione uma opção</option>
+                                <option value="com.br">.com.br (Recomendado para Brasil) - R$ 40-60/ano</option>
+                                <option value="com">.com (Internacional) - R$ 50-100/ano</option>
+                                <option value="com-combr">.com + .com.br (Proteção de marca) - R$ 90-160/ano</option>
+                                <option value="outro">Outra extensão (.net, .org, etc.)</option>
+                                <option value="nao-sei">Não sei, preciso de orientação</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="domain-name">Nome desejado para o domínio</label>
+                            <input type="text" id="domain-name" name="domain-name" placeholder="Ex: minhaempresa, lojaincrivel">
+                            <small>Verificaremos a disponibilidade do nome</small>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h2>🖥️ Hospedagem do Site</h2>
+                        
+                        <div class="warning-box">
+                            <p><strong>⚠️ Atenção:</strong> Hospedagens gratuitas inserem propagandas no seu site e têm desempenho limitado. Recomendamos hospedagem paga para sites profissionais.</p>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="hosting-type" class="required">Tipo de Hospedagem Desejada</label>
+                            <select id="hosting-type" name="hosting-type" required>
+                                <option value="">Selecione uma opção</option>
+                                <option value="compartilhada">Hospedagem Compartilhada (R$ 15-30/mês) - Recomendado para sites institucionais</option>
+                                <option value="wordpress">Hospedagem WordPress Otimizada (R$ 20-40/mês) - Para blogs/sites WordPress</option>
+                                <option value="ecommerce">Hospedagem E-commerce (R$ 30-80/mês) - Para lojas virtuais</option>
+                                <option value="vps">VPS (R$ 50-150/mês) - Para sites com alto tráfego</option>
+                                <option value="nao-sei">Não sei, preciso de orientação</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="hosting-management">Quem vai gerenciar a hospedagem?</label>
+                            <select id="hosting-management" name="hosting-management">
+                                <option value="">Selecione uma opção</option>
+                                <option value="desenvolvedor">Quero que você gerencie tudo</option>
+                                <option value="cliente">Eu vou gerenciar</option>
+                                <option value="ambos">Prefiro dividir a responsabilidade</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h2>📧 Email Profissional</h2>
+                        <div class="form-group">
+                            <label for="professional-email">Deseja ter email profissional?</label>
+                            <select id="professional-email" name="professional-email">
+                                <option value="">Selecione uma opção</option>
+                                <option value="sim">Sim, quero email profissional (ex: contato@empresa.com.br)</option>
+                                <option value="nao">Não, vou usar email pessoal</option>
+                                <option value="talvez">Talvez no futuro</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email-accounts">Quantas contas de email precisa?</label>
+                            <input type="number" id="email-accounts" name="email-accounts" min="0" max="20" value="1">
+                            <small>Ex: contato@, vendas@, suporte@, etc.</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="navigation-buttons">
+                    <button type="button" class="btn prev-step" data-prev="step2">Anterior</button>
+                    <button type="button" class="btn next-step" data-next="step4">Próximo</button>
+                </div>
+            </div>
+            
+            <!-- Passo 4: Finalização -->
+            <div class="form-step" id="step4">
+                <div class="form-container">
+                    <div class="form-section">
+                        <h2>💰 Orçamento e Prazo</h2>
+                        <div class="form-group">
+                            <label for="project-deadline">Prazo desejado para conclusão</label>
+                            <input type="text" id="project-deadline" name="project-deadline" placeholder="Ex: 30 dias, 2 meses, urgente">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="budget-range">Faixa de orçamento para o desenvolvimento</label>
+                            <select id="budget-range" name="budget-range">
+                                <option value="">Selecione uma opção</option>
+                                <option value="ate-2k">Até R$ 2.000</option>
+                                <option value="2k-5k">R$ 2.000 - R$ 5.000</option>
+                                <option value="5k-10k">R$ 5.000 - R$ 10.000</option>
+                                <option value="10k-20k">R$ 10.000 - R$ 20.000</option>
+                                <option value="acima-20k">Acima de R$ 20.000</option>
+                                <option value="a-definir">Precisa de proposta detalhada</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h2>📋 Informações Adicionais</h2>
+                        <div class="form-group">
+                            <label for="additional-info">Alguma informação adicional que considera importante?</label>
+                            <textarea id="additional-info" name="additional-info" placeholder="Observações, preocupações, expectativas, necessidades específicas, etc."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="how-found">Como você nos encontrou?</label>
+                            <select id="how-found" name="how-found">
+                                <option value="">Selecione uma opção</option>
+                                <option value="google">Google/Busca online</option>
+                                <option value="indicacao">Indicação</option>
+                                <option value="redes-sociais">Redes sociais</option>
+                                <option value="portfolio">Vi seu portfolio</option>
+                                <option value="outro">Outro</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h2>✅ Pronto para começar?</h2>
+                        <p>Ao enviar este formulário, você estará fornecendo todas as informações necessárias para que possamos dar início ao seu projeto. Entraremos em contato em até 24 horas com uma proposta detalhada.</p>
+                        
+                        <div class="form-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="agree-terms" name="agree-terms" required>
+                                <label for="agree-terms" class="required">Concordo com os termos e condições e autorizo o contato</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="navigation-buttons">
+                    <button type="button" class="btn prev-step" data-prev="step3">Anterior</button>
+                    <button type="submit" class="btn">Enviar Briefing Completo</button>
+                </div>
+            </div>
+        </form>
+        
+        <footer>
+            <p>Formulário de Briefing para Projetos Web &copy; 2023 - Todos os direitos reservados</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Navegação entre os passos
+            const nextButtons = document.querySelectorAll('.next-step');
+            const prevButtons = document.querySelectorAll('.prev-step');
+            const formSteps = document.querySelectorAll('.form-step');
+            const progressSteps = document.querySelectorAll('.progress-step');
+            
+            nextButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const currentStep = this.closest('.form-step');
+                    const nextStepId = this.getAttribute('data-next');
+                    const nextStep = document.getElementById(nextStepId);
+                    
+                    if (validateStep(currentStep)) {
+                        currentStep.classList.remove('active');
+                        nextStep.classList.add('active');
+                        updateProgressBar(nextStepId);
+                    }
+                });
+            });
+            
+            prevButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const currentStep = this.closest('.form-step');
+                    const prevStepId = this.getAttribute('data-prev');
+                    const prevStep = document.getElementById(prevStepId);
+                    
+                    currentStep.classList.remove('active');
+                    prevStep.classList.add('active');
+                    updateProgressBar(prevStepId);
+                });
+            });
+            
+            function updateProgressBar(activeStepId) {
+                const stepNumber = parseInt(activeStepId.replace('step', ''));
+                
+                progressSteps.forEach((step, index) => {
+                    step.classList.remove('step-active', 'step-completed');
+                    
+                    if (index + 1 === stepNumber) {
+                        step.classList.add('step-active');
+                    } else if (index + 1 < stepNumber) {
+                        step.classList.add('step-completed');
+                    }
+                });
+            }
+            
+            function validateStep(step) {
+                const requiredFields = step.querySelectorAll('[required]');
+                let isValid = true;
+                
+                requiredFields.forEach(field => {
+                    if (!field.value.trim()) {
+                        isValid = false;
+                        field.style.borderColor = 'var(--danger)';
+                        
+                        field.addEventListener('input', function() {
+                            this.style.borderColor = 'var(--border)';
+                        });
+                    }
+                });
+                
+                if (!isValid) {
+                    alert('Por favor, preencha todos os campos obrigatórios antes de continuar.');
+                }
+                
+                return isValid;
+            }
+            
+            // Configuração do campo "Outras páginas"
+            const otherPagesCheckbox = document.getElementById('page-other');
+            const otherPagesInput = document.getElementById('other-pages');
+            
+            otherPagesCheckbox.addEventListener('change', function() {
+                if (this.checked) {
+                    otherPagesInput.classList.remove('hidden');
+                } else {
+                    otherPagesInput.classList.add('hidden');
+                    otherPagesInput.value = '';
+                }
+            });
+            
+            // Inicialmente esconder o campo
+            otherPagesInput.classList.add('hidden');
+        });
+    </script>
+</body>
+</html>
